@@ -7,8 +7,10 @@ Status: Meshtastic binding implemented and tested over the air. MeshCore binding
 [oshi-meshcore-bridge](https://github.com/Lastoneparis/oshi-meshcore-bridge) and in the OSHI apps, and **tested over the
 air** on 2026-09-23 between two Heltec V3 radios running MeshCore companion firmware 1.17.1 (869.618 MHz, BW 62.5 kHz,
 SF8): 600 bytes (4 frames, 7 datagrams) and 2,000 bytes (11 frames, 22 datagrams) received byte for byte, in both
-directions, with [`tools/meshcore_air_test.py`](../tools/meshcore_air_test.py). The bridge itself is not yet tested over
-the air.
+directions, with [`tools/meshcore_air_test.py`](../tools/meshcore_air_test.py). The bridge's code was then run between a
+simulated Meshtastic side and the same two MeshCore radios: messages crossed both ways byte for byte
+([oshi-mesh-firmware `tools/oshi/bridge_air_test.py`](https://github.com/Lastoneparis/oshi-mesh-firmware/blob/oshi/tools/oshi/bridge_air_test.py)).
+A run with real radios on both networks is next.
 
 ## 1. Meshtastic
 
