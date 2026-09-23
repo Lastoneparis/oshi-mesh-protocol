@@ -68,7 +68,8 @@ Implemented elsewhere? Open an issue and it will be listed here.
 
 Version 1 is stable on the wire. Tested: unit tests and vectors, simulated meshes that include unmodified Meshtastic
 nodes (OMP crosses a stock CLIENT and a stock ROUTER that cannot decode it), and over the air between two Heltec V3
-radios. Not yet tested over the air: the MeshCore binding and bridge.
+radios. The MeshCore binding is tested over the air between two MeshCore companion radios (up to 2 KB, both
+directions, `tools/meshcore_air_test.py`). Not yet tested over the air: the Meshtastic <-> MeshCore bridge.
 
 ## Licences
 

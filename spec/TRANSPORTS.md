@@ -3,9 +3,12 @@
 OMP frames (see [OMP-v1.md](OMP-v1.md)) are transport-independent byte strings of at most 200 bytes. This document
 specifies how they ride each LoRa mesh network OSHI uses today, and how a frame crosses from one network to another.
 
-Status: Meshtastic binding implemented and tested over the air; MeshCore binding implemented in
-[oshi-meshcore-bridge](https://github.com/Lastoneparis/oshi-meshcore-bridge) and in the OSHI apps, tested in software,
-**not yet over the air**.
+Status: Meshtastic binding implemented and tested over the air. MeshCore binding implemented in
+[oshi-meshcore-bridge](https://github.com/Lastoneparis/oshi-meshcore-bridge) and in the OSHI apps, and **tested over the
+air** on 2026-09-23 between two Heltec V3 radios running MeshCore companion firmware 1.17.1 (869.618 MHz, BW 62.5 kHz,
+SF8): 600 bytes (4 frames, 7 datagrams) and 2,000 bytes (11 frames, 22 datagrams) received byte for byte, in both
+directions, with [`tools/meshcore_air_test.py`](../tools/meshcore_air_test.py). The bridge itself is not yet tested over
+the air.
 
 ## 1. Meshtastic
 
@@ -79,6 +82,12 @@ Over the companion protocol (MeshCore `examples/companion_radio/MyMesh.cpp`; BLE
 | Receive | on push `83`, send `0A` until reply `0A` (no more) | `1B` CHANNEL_DATA_RECV: snr, 0, 0, channel idx, path length, data type LE16, length, data |
 
 The app uses the first four bytes of the radio's public key (little-endian) as its `origin` and envelope `sender`.
+
+**Drain the radio as datagrams arrive.** A companion radio queues at most 16 messages for its app
+(`OFFLINE_QUEUE_SIZE`) and, when full, drops the **oldest channel messages** first. An app must answer every `83` push
+with `0A` requests right away. Measured: a 2,000-byte message (22 datagrams) read only after the sender finished lost 6
+datagrams (4 of 11 frames); read as it arrived, it was complete. While the phone is away from its radio, only about
+16 datagrams (roughly 1.2 KB of OMP) survive; OMP's repair round recovers the rest from an OMP-aware sender.
 
 ## 3. Bridging between networks
 
