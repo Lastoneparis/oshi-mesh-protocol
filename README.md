@@ -19,6 +19,9 @@ arrived. OMP adds that on top, without asking the existing network to change:
 - **Compatible by construction**: frames are opaque payloads that stock Meshtastic nodes relay without decoding, and that
   MeshCore repeaters flood like any group-channel message.
 
+How this compares with stock Meshtastic and MeshCore, including where they are ahead:
+<https://oshi-messenger.com/lora/why-oshi-mesh>.
+
 ## Contents
 
 | | |
