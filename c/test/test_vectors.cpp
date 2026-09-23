@@ -60,6 +60,10 @@ static void testData()
     f.dest = OMP_DEST_BROADCAST;
     f.flags = 0;
     CHECK(same(buf, encodeData(f, buf, sizeof(buf)), VEC_V3_DATA_BROADCAST));
+    f.dest = OMP_DEST_INTERNET;
+    f.data = nullptr;
+    f.len = 0;
+    CHECK(same(buf, encodeData(f, buf, sizeof(buf)), VEC_V3_INTERNET_HEADER));
 
     std::vector<uint8_t> v1 = hex(VEC_V1_DATA_CUSTODY_OK);
     DataFrame d;
@@ -125,6 +129,7 @@ static void testControl()
     b.version = 0x0100;
     b.custodyFreeKb = 32;
     CHECK(same(buf, encodeBeacon(b, buf, sizeof(buf)), VEC_V7_BEACON));
+    CHECK(same(buf, encodeBeacon(BeaconFrame{}, buf, sizeof(buf)), VEC_V7_PROBE));
 
     StatusFrame st;
     st.msgId = MSG;
